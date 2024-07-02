@@ -11,26 +11,34 @@ function App() {
   const day = now.getDay()
 
   const [channel, setchannel] = useState(1) //valid channels: [1, 2, 24, 4, 5, 6, 7]
-  const [tvon, settvon] = useState(0)
+  const [tvon, settvon] = useState(false)
+
+  const toggleTV = () => {
+    settvon((v) => {
+      //console.log(v, !v)
+      return !v
+    })
+  }
+
+  // const changeChannel = () => {
+  // }
+
+  useEffect(() => {
+    if (!tvon) return;
+    console.log(`the tv is on`)
+    // fetch(`https://www.ceskatelevize.cz/services-old/programme/xml/schedule.php?user=test&date=${day}.${month}.${year-1}&channel=ct${channel}&json=1`)
+    //   .then(ret => ret.json())
+    //   .then(data => {
+    //     console.log(data)
+    //     return data
+    //   })
+
+    
+  }, [tvon, channel, day, month, year])
 
   useEffect(() => {
 
-    const changeChannel = () => {
-      fetch(`https://www.ceskatelevize.cz/services-old/programme/xml/schedule.php?user=test&date=${day}.${month}.${year-1}&channel=ct${channel}&json=1`)
-        .then(ret => ret.json())
-        .then(data => {
-          console.log(data)
-          return data
-        })
-    }
-    
-    const toggleTV = () => {
-      if (tvon) {settvon = 0}
-      else {
-        settvon = 1
-        changeChannel()
-      }
-    }
+    //const changeChannel = () => {}
 
     const shift = (event) => {
       const { innerWidth, innerHeight } = window;
@@ -42,16 +50,16 @@ function App() {
     }
     
     document.addEventListener('mousemove', shift) 
-    document.addEventListener('mousedown', changeChannel)
+    document.addEventListener('mousedown', toggleTV)
     return(()=>{
       document.removeEventListener('mousemove', shift)
-      document.removeEventListener('mousedown', changeChannel)
+      document.removeEventListener('mousedown', toggleTV)
     })
   }, [])
 
   return (<>
     <div className='background' style={{transform:`translate(${-offsetX}%, ${-offsetY}%)`}}>
-      
+      {/* <img src='' */}
     </div>
     <div className='remote'>
       <img src={require('./media/control.png')} alt='remote'/>
