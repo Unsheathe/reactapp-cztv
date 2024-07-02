@@ -8,11 +8,19 @@ html, body {
 /* The background div that will have the background image */
 .background {
   position: absolute;
+  top: -20vh;
+  left: -20vw;
+  width: 140vw;
+  height: 140vh;
+  background: url('./media/backdrop.avif') no-repeat center center;
+  background-size: cover;
+  transition: transform 0.1s ease-out, background-size 0.1s ease-out;
+}
+
+.remote {
+  position: absolute;
+  /* top: -90vh;
+  right: -10vw; */
   top: 0;
   left: 0;
-  width: 200%;
-  height: 200%;
-  background: url('../media/backdrop.avif') no-repeat center center;
-  background-size: cover;
-  transition: transform 0.1s ease-out;
 }
