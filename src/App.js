@@ -1,34 +1,33 @@
 //import logo from './logo.svg';
+import React, {useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  
+  const [offsetX, setoffsetX] = useState(0)
+  const [offsetY, setoffsetY] = useState(0)
 
-  console.log(`test3`)
-  // // Function to handle mouse movement
-  // function handleMouseMove(event) {
-  //   // Get the viewport dimensions
-  //   const { innerWidth, innerHeight } = window;
+  useEffect(() => {
+    const shift = (event) => {
+      const { innerWidth, innerHeight } = window;
+            const { clientX, clientY } = event;
+            const moveX = (clientX / innerWidth) * 100;
+            const moveY = (clientY / innerHeight) * 100;
+            setoffsetX((moveX - 50) / 10);
+            setoffsetY((moveY - 50) / 10);
+    }
     
-  //   // Get the mouse position
-  //   const { clientX, clientY } = event;
-    
-  //   // Calculate the percentage of the mouse position relative to the viewport
-  //   const moveX = (clientX / innerWidth) * 100;
-  //   const moveY = (clientY / innerHeight) * 100;
-    
-  //   // Calculate the offset for the background movement
-  //   const offsetX = (moveX - 50) / 10;
-  //   const offsetY = (moveY - 50) / 10;
-    
-  //   // Apply the transform to the background
-  //   const background = document.querySelector('.background');
-  //   background.style.transform = `translate(${offsetX}%, ${offsetY}%)`;
-  // }
+    document.addEventListener('mousemove', shift) 
 
-  // // Add event listener for mouse movement
-  // document.addEventListener('mousemove', handleMouseMove);
+    //put in returns statement?
+    return(()=>{
+      document.removeEventListener('mousemove', shift)
+    })
+    
+  }, [])
 
+  return (
+    <div className='background' style={{transform:`translate(${offsetX}%, ${offsetY}%)`}}></div>
+  )
   
 }
 
